@@ -40,7 +40,7 @@ if ($res['code']==1000) {
 $res = $domrobot->logout();
 ```
 
-U can also look at the example.php in the Project.
+You can also look at the example.php in the Project.
 
 License
 ----
