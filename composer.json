@@ -1,0 +1,16 @@
+{
+    "name": "inwx/domrobot",
+    "type": "library",
+    "version": "v1.2",
+    "authors": [
+        {
+            "name": "InterNetworX",
+            "email": "support@inwx.de"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "INWX\\": ""
+        }
+    }
+}
