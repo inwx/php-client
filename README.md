@@ -19,7 +19,7 @@ $usr = "your_username";
 $pwd = "your_password";
 
 // Create Domrobot and Login
-$domrobot = new domrobot($addr);
+$domrobot = new INWX\Domrobot($addr);
 $domrobot->setDebug(false);
 $domrobot->setLanguage('en');
 $res = $domrobot->login($usr,$pwd);
