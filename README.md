@@ -1,4 +1,4 @@
-inwx.de XML-RPC PHP Client
+inwx.com XML-RPC PHP Client
 =========
 You can access all functions of our frontend via an application programming interface (API). Our API is based on the XML-RPC protocol and thus can be easily addressed by almost all programming languages. The documentation and programming examples in PHP, Java, Ruby and Python can be downloaded here.
 
@@ -18,7 +18,7 @@ $addr = "https://api.ote.domrobot.com/xmlrpc/";
 $usr = "your_username";
 $pwd = "your_password";
 
-// Create Demrobot and Login
+// Create Domrobot and Login
 $domrobot = new domrobot($addr);
 $domrobot->setDebug(false);
 $domrobot->setLanguage('en');

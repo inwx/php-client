@@ -10,7 +10,7 @@
 
 header('Content-type: text/plain; charset=utf-8');
 error_reporting(E_ALL);
-require "domrobot.class.php";
+require "INWX/Domrobot.php";
 
 //$addr = "https://api.domrobot.com/xmlrpc/";
 //$addr = "https://api.ote.domrobot.com/xmlrpc/";
