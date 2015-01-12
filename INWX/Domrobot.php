@@ -55,7 +55,7 @@ class Domrobot
 
 		if (file_exists($this->_cookiefile) && !is_writable($this->_cookiefile) ||
 			!file_exists($this->_cookiefile) && !is_writeable(dirname(__FILE__))) {
-			throw new Exception("Cannot write cookiefile: '{$this->_cookiefile}'. Please check file/folder permissions.",2400);			
+			throw new \Exception("Cannot write cookiefile: '{$this->_cookiefile}'. Please check file/folder permissions.",2400);			
 		}
 	}
 
