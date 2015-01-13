@@ -1,6 +1,7 @@
 {
     "name": "inwx/domrobot",
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "InterNetworX",
