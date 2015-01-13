@@ -45,18 +45,11 @@ class Domrobot
 	private $clTRID = null;
 
 	private $_ver = "2.4";
-	private $_cookiefile = "domrobot.tmp";
+	private $_cookiefile = NULL;
 
 	function __construct($address) {
 		$this->address = (substr($address,-1)!="/")?$address."/":$address;
-
-		$seperator = (DIRECTORY_SEPARATOR=="/" || DIRECTORY_SEPARATOR=="\\")?DIRECTORY_SEPARATOR:"/";
-		$this->_cookiefile = dirname(__FILE__).$seperator.$this->_cookiefile;
-
-		if (file_exists($this->_cookiefile) && !is_writable($this->_cookiefile) ||
-			!file_exists($this->_cookiefile) && !is_writeable(dirname(__FILE__))) {
-			throw new \Exception("Cannot write cookiefile: '{$this->_cookiefile}'. Please check file/folder permissions.",2400);			
-		}
+		$this->_cookiefile = tempnam(sys_get_temp_dir(), 'INWX');
 	}
 
 	public function setLanguage($language) {
@@ -71,6 +64,17 @@ class Domrobot
 	}
 	public function getDebug() {
 		return $this->debug;
+	}
+	public function setCookiefile($file)
+	{
+		if ((file_exists($file) && !is_writable($file)) || (!file_exists($file) && !is_writeable(dirname($file)))) {
+			throw new \Exception("Cannot write cookiefile: '{$this->_cookiefile}'. Please check file/folder permissions.",2400);			
+		}
+		$this->$_cookiefile = $file;
+	}
+	public function getCookiefile()
+	{
+		return $this->$_cookiefile();
 	}
 	
 	public function setCustomer($customer) {
