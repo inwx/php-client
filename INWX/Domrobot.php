@@ -70,7 +70,7 @@ class Domrobot
 		$this->debug = (bool)$debug;
 	}
 	public function getDebug() {
-		return $debug;
+		return $this->debug;
 	}
 	
 	public function setCustomer($customer) {
