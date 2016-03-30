@@ -34,13 +34,13 @@ class Domrobot
 	public function setCookiefile($file)
 	{
 		if ((file_exists($file) && !is_writable($file)) || (!file_exists($file) && !is_writeable(dirname($file)))) {
-			throw new \Exception("Cannot write cookiefile: '{$this->_cookiefile}'. Please check file/folder permissions.",2400);			
+			throw new \Exception("Cannot write cookiefile: '".$file."'. Please check file/folder permissions.",2400);			
 		}
-		$this->$_cookiefile = $file;
+		$this->_cookiefile = $file;
 	}
 	public function getCookiefile()
 	{
-		return $this->$_cookiefile();
+		return $this->_cookiefile;
 	}
 	
 	public function setCustomer($customer) {
