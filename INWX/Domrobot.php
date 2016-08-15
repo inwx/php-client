@@ -96,8 +96,16 @@ class Domrobot
 		if (!empty($this->clTRID)) {
 			$params['clTRID'] = $this->clTRID;
 		}
+
+		$useJSON = preg_match('!/jsonrpc!',$this->address);
+
+		if ($useJSON) {
+			$request = json_encode(array('method' => $object.".".$method, 'params' => $params));
+		}
+		else {
+			$request = xmlrpc_encode_request(strtolower($object.".".$method), $params, array("encoding"=>"UTF-8","escaping"=>"markup","verbosity"=>"no_white_space"));
+		}
 		
-		$request = xmlrpc_encode_request(strtolower($object.".".$method), $params, array("encoding"=>"UTF-8","escaping"=>"markup","verbosity"=>"no_white_space"));
 	
 		$header[] = "Content-Type: text/xml";   
 		$header[] = "Connection: keep-alive";
@@ -122,7 +130,12 @@ class Domrobot
 			echo "Response:\n".$response."\n";
 		}
 
-		return xmlrpc_decode($response,'UTF-8');
+		if ($useJSON) {
+			return json_decode($response);
+		}
+		else {
+			return xmlrpc_decode($response,'UTF-8');
+		}
 	}
 	
 	private function _getSecretCode($secret) {
