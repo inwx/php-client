@@ -15,6 +15,16 @@ require "INWX/Domrobot.php";
 //$addr = "https://api.domrobot.com/xmlrpc/";
 //$addr = "https://api.ote.domrobot.com/xmlrpc/";
 
+// Alternatively, you may use JSON (experimental):
+//
+//$addr = "https://api.domrobot.com/jsonrpc/";
+//$addr = "https://api.ote.domrobot.com/jsonrpc/";
+
+// Remeber when using JSON you get objects back, not arrays, so use:
+//   $res->code
+// instead of:
+//   $res['code']
+
 $usr = "your_username";
 $pwd = "your_password";
 
