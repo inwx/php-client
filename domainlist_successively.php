@@ -20,7 +20,7 @@ $usr = "";
 $pwd = "";
 
 $domains_per_request = 20;
-$sleep_between_requests = 1;
+$sleep_between_requests = false; // sleep for a defined number of seconds after each api-request (default: false)
 
 
 $domrobot = new INWX\Domrobot($addr);
