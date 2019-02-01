@@ -45,5 +45,3 @@ if($res_lgn['code'] == 1000){
 } else{
 	print_r($res_lgn);
 }
-
-?>

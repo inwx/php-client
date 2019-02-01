@@ -5,7 +5,11 @@ You will need to use the --with-xmlrpc[=DIR] configuration option when compiling
  
 #Changelog:
 
-##2015/01/XX - Master
+##2019/02/02 - Master
+- Add composer setup documentation
+- Update API docbook
+
+##2015/01/XX
  - Add Composer
  - Move Domrobot Class to Namespace "INWX"
  - Set Cookiefile default to the System tmp folder/file

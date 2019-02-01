@@ -10,6 +10,7 @@
 
 header('Content-type: text/plain; charset=utf-8');
 error_reporting(E_ALL);
+
 require "INWX/Domrobot.php";
 
 //$addr = "https://api.domrobot.com/xmlrpc/";
@@ -33,10 +34,10 @@ $domrobot->setDebug(false);
 $domrobot->setLanguage('en');
 $res = $domrobot->login($usr,$pwd);
 
-if ($res['code']==1000) {
+if ($res['code'] == 1000) {
 	$obj = "domain";
 	$meth = "check";
-	$params = array();
+	$params = [];
 	$params['domain'] = "mydomain.com";
 	$res = $domrobot->call($obj,$meth,$params);
 	print_r($res);
@@ -45,5 +46,3 @@ if ($res['code']==1000) {
 }
 
 $res = $domrobot->logout();
-
-?>

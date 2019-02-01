@@ -8,39 +8,57 @@ Documentation
 ------
 You can view a detailed description of the API functions in our documentation. The documentation as PDF ist part of the Projekt. You also can read the documentation online http://www.inwx.de/en/help/apidoc
 
+Installation
+-------
+We provide composer support for an easy installation. If u wish to setup our php-client manually
+you can also require the domrobot class without composer.
+
+```
+composer require inwx/domrobot
+```
+
+API Endpoints
+-------
+Production endpoint: `https://api.domrobot.com/xmlrpc/`
+
+Development endpoint: `https://api.ote.domrobot.com/xmlrpc/`
+
 Example
 -------
 
 ```php
 require "domrobot.class.php";
-// Config
-$addr = "https://api.ote.domrobot.com/xmlrpc/";
-$usr = "your_username";
-$pwd = "your_password";
 
-// Create Domrobot and Login
-$domrobot = new INWX\Domrobot($addr);
+// Config
+$endpoint = "https://api.ote.domrobot.com/xmlrpc/";
+$username = "your_username";
+$password = "your_password";
+
+// Create Domrobot instance and authorize
+$domrobot = new INWX\Domrobot($endpoint);
 $domrobot->setDebug(false);
 $domrobot->setLanguage('en');
-$res = $domrobot->login($usr,$pwd);
+$result = $domrobot->login($username, $password);
 
-//Make an API Call
-if ($res['code']==1000) {
-	$obj = "domain";
-	$meth = "check";
-	$params = array();
-	$params['domain'] = "mydomain.com";
-	$res = $domrobot->call($obj,$meth,$params);
-	print_r($res);
+// Build an API Call
+if ($result['code'] == 1000) {
+	$result = $domrobot->call('domain', 'check', [
+	    'domain' => 'mydomain.com'
+	]);
+	
+	echo '<pre>';
+	print_r($result);
+	
 } else {
+    echo '<pre>';
 	print_r($res);
 }
 
-//Logout
-$res = $domrobot->logout();
+// Logout
+$result = $domrobot->logout();
 ```
 
-You can also look at the example.php in the Project.
+You can also take a look at the example.php in this project.
 
 License
 ----

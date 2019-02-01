@@ -12,5 +12,8 @@
         "psr-0": {
             "INWX\\": ""
         }
-    }
+    },
+  "require": {
+    "ext-xmlrpc": "*"
+  }
 }
