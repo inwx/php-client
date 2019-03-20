@@ -12,32 +12,35 @@ Example
 -------
 
 ```php
-require "domrobot.class.php";
+<?php
+
+require 'domrobot.class.php';
 // Config
-$addr = "https://api.ote.domrobot.com/xmlrpc/";
-$usr = "your_username";
-$pwd = "your_password";
+$addr = 'https://api.ote.domrobot.com/xmlrpc/';
+$usr  = 'your_username';
+$pwd  = 'your_password';
 
 // Create Domrobot and Login
 $domrobot = new INWX\Domrobot($addr);
 $domrobot->setDebug(false);
 $domrobot->setLanguage('en');
-$res = $domrobot->login($usr,$pwd);
+$res = $domrobot->login($usr, $pwd);
 
 //Make an API Call
-if ($res['code']==1000) {
-	$obj = "domain";
-	$meth = "check";
-	$params = array();
-	$params['domain'] = "mydomain.com";
-	$res = $domrobot->call($obj,$meth,$params);
-	print_r($res);
+if ($res['code'] == 1000) {
+    $obj              = 'domain';
+    $meth             = 'check';
+    $params           = [];
+    $params['domain'] = 'mydomain.com';
+    $res              = $domrobot->call($obj, $meth, $params);
+    print_r($res);
 } else {
-	print_r($res);
+    print_r($res);
 }
 
 //Logout
 $res = $domrobot->logout();
+
 ```
 
 You can also look at the example.php in the Project.
