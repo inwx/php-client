@@ -6,7 +6,7 @@
 
 INWX Domrobot PHP Client
 =========
-You can access all functions of our frontend via our API, is available via the XML-RPC protocol or JSON-RPC and thus can be easily consumed with all programming languages.
+You can access all functions of our frontend via our API, which is available via the XML-RPC or JSON-RPC protocol and thus can be easily consumed with all programming languages.
 
 There is also an OT&E test system, which you can access via [ote.inwx.com](https://ote.inwx.com/en/). Here you will find the known web interface which is using a test database. On the OT&E system no actions will be charged. So you can test as much as you like there.
 
