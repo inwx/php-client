@@ -4,7 +4,7 @@
   </a>
 </p>
 
-INWX Domrobot API Client
+INWX Domrobot PHP Client
 =========
 You can access all functions of our frontend via our API, is available via the XML-RPC protocol or JSON-RPC and thus can be easily consumed with all programming languages.
 
@@ -22,7 +22,7 @@ the recommended way is via composer:
 ```bash
 composer require inwx/domrobot
 ```
-now you can use the Library by importing the Domrobot class:
+now you can use the client by importing the Domrobot class:
 ```php
 use INWX\Domrobot;
 ```
