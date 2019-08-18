@@ -1,49 +1,39 @@
 <?php
-/*
- * XML-RPC support in PHP is not enabled by default. 
- * You will need to use the --with-xmlrpc[=DIR] configuration option when compiling PHP to enable XML-RPC support. 
- * This extension is bundled into PHP as of 4.1.0.
- * 
- * cURL needs to be installed and activated
- * 
- */
 
-header('Content-type: text/plain; charset=utf-8');
 error_reporting(E_ALL);
-require "INWX/Domrobot.php";
+require 'vendor/autoload.php';
 
-//$addr = "https://api.domrobot.com/xmlrpc/";
-//$addr = "https://api.ote.domrobot.com/xmlrpc/";
+// Get your credentials from a safe place when using in production
+$username = 'your_username';
+$password = 'your_password';
 
-// Alternatively, you may use JSON (experimental):
-//
-//$addr = "https://api.domrobot.com/jsonrpc/";
-//$addr = "https://api.ote.domrobot.com/jsonrpc/";
+$domrobot = new \INWX\Domrobot();
+$result = $domrobot->setLanguage('en')
+    // use our OTE endpoint
+    ->useOte()
+    // Uncomment to use our Live endpoint instead
+    // ->useLive()
+    // use the JSON-RPC API
+    ->useJson()
+    // Or use the XML-RPC API instead
+    //->useXml()
+    // Uncomment to see everything you're sending and receiving
+    ->setDebug(true)
+    ->login($username, $password);
 
-// Remeber when using JSON you get objects back, not arrays, so use:
-//   $res->code
-// instead of:
-//   $res['code']
+if ($result['code'] == 1000) {
+    $object = 'domain';
+    $method = 'check';
+    $params = ['domain' => 'mydomain.com'];
 
-$usr = "your_username";
-$pwd = "your_password";
+    $result = $domrobot->call($object, $method, $params);
 
-$domrobot = new INWX\Domrobot($addr);
-$domrobot->setDebug(false);
-$domrobot->setLanguage('en');
-$res = $domrobot->login($usr,$pwd);
-
-if ($res['code']==1000) {
-	$obj = "domain";
-	$meth = "check";
-	$params = array();
-	$params['domain'] = "mydomain.com";
-	$res = $domrobot->call($obj,$meth,$params);
-	print_r($res);
-} else {
-	print_r($res);
+    // $res now contains an array with the complete response
+    // the basic format of this array is the same whether you use our JSON or XML API
+    // there are however some differences with files and dates in the response
+    // you should try out your code in our OTE system, to be sure that everything works
 }
 
-$res = $domrobot->logout();
+print_r($result);
 
-?>
+$domrobot->logout();
