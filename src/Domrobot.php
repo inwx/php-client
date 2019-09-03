@@ -7,7 +7,7 @@ use RuntimeException;
 class Domrobot
 {
     private const VERSION = '3.0';
-    private const LIVE_URL = 'https://api.domrobot.com';
+    private const LIVE_URL = 'https://api.domrobot.com/';
     private const OTE_URL = 'https://api.ote.domrobot.com/';
     private const XMLRPC = 'xmlrpc';
     private const JSONRPC = 'jsonrpc';
