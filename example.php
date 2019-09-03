@@ -9,15 +9,15 @@ $password = 'your_password';
 
 $domrobot = new \INWX\Domrobot();
 $result = $domrobot->setLanguage('en')
-    // use our OTE endpoint
+    // use the OTE endpoint
     ->useOte()
-    // Uncomment to use our Live endpoint instead
+    // or use the LIVE endpoint instead
     // ->useLive()
     // use the JSON-RPC API
     ->useJson()
-    // Or use the XML-RPC API instead
+    // or use the XML-RPC API instead
     //->useXml()
-    // Uncomment to see everything you're sending and receiving
+    // debug will let you see everything you're sending and receiving
     ->setDebug(true)
     ->login($username, $password);
 
