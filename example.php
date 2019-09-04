@@ -12,7 +12,7 @@ $result = $domrobot->setLanguage('en')
     // use the OTE endpoint
     ->useOte()
     // or use the LIVE endpoint instead
-    // ->useLive()
+    //->useLive()
     // use the JSON-RPC API
     ->useJson()
     // or use the XML-RPC API instead
