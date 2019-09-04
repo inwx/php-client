@@ -1,16 +1,30 @@
 {
     "name": "inwx/domrobot",
-    "type": "library",
+    "description": "PHP Client to easily use the Domrobot API of INWX",
     "license": "MIT",
+    "homepage": "https://www.inwx.com/en/",
+    "support": {
+        "docs": "https://www.inwx.com/en/help/apidoc",
+        "email": "support@inwx.de",
+        "source": "https://github.com/inwx/php-client"
+    },
     "authors": [
         {
-            "name": "InterNetworX",
+            "name": "INWX",
             "email": "support@inwx.de"
         }
     ],
+    "require": {
+        "php": ">=7.2",
+        "ext-curl": "*"
+    },
     "autoload": {
-        "psr-0": {
-            "INWX\\": ""
+        "psr-4": {
+            "INWX\\": "src/"
         }
+    },
+    "suggest": {
+        "ext-xmlrpc": "Needed to use the XML-RPC API",
+        "ext-json": "Needed to use the JSON-RPC API"
     }
 }

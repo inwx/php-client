@@ -1,0 +1,5 @@
+.php_cs.cache
+.php_cs.dist
+vendor
+.idea
+composer.lock
