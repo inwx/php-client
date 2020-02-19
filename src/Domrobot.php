@@ -2,9 +2,13 @@
 
 namespace INWX;
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 
-class Domrobot
+class Domrobot implements LoggerAwareInterface
 {
     private const VERSION = '3.0';
     private const LIVE_URL = 'https://api.domrobot.com/';
@@ -22,12 +26,19 @@ class Domrobot
     private $api = self::JSONRPC;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * Domrobot constructor.
      *
      * @param string|null $cookieFile You can overwrite the standard cookieFile path by setting a full path here
      */
     public function __construct(?string $cookieFile = null)
     {
+        $this->logger = new Logger('domrobot_default_logger');
+        $this->logger->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
         $this->cookieFile = $cookieFile ?? tempnam(sys_get_temp_dir(), 'INWX');
     }
 
@@ -286,8 +297,8 @@ class Domrobot
         $response = curl_exec($ch);
         curl_close($ch);
         if ($this->debug) {
-            echo "Request:\n" . $request . "\n";
-            echo "Response:\n" . $response . "\n";
+            $this->logger->debug("Request:\n" . $request . "\n");
+            $this->logger->debug("Response:\n" . $response . "\n");
         }
 
         if ($this->isJson()) {
@@ -353,5 +364,13 @@ class Domrobot
         }
 
         return $ret;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 }
