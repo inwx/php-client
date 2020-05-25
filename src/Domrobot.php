@@ -278,7 +278,7 @@ class Domrobot implements LoggerAwareInterface
                 ['encoding' => 'UTF-8', 'escaping' => 'markup', 'verbosity' => 'no_white_space']);
         }
 
-        $header[] = 'Content-Type: text/xml';
+        $header[] = 'Content-Type: ' . ($this->isJson() ? 'application/json' : 'text/xml');
         $header[] = 'Connection: keep-alive';
         $header[] = 'Keep-Alive: 300';
         $forwardedFor = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? '';
