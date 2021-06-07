@@ -10,25 +10,25 @@ use RuntimeException;
 
 class Domrobot implements LoggerAwareInterface
 {
-    private const VERSION = '3.1.0';
-    private const LIVE_URL = 'https://api.domrobot.com/';
-    private const OTE_URL = 'https://api.ote.domrobot.com/';
-    private const XMLRPC = 'xmlrpc';
-    private const JSONRPC = 'jsonrpc';
+    protected const VERSION = '3.1.0';
+    protected const LIVE_URL = 'https://api.domrobot.com/';
+    protected const OTE_URL = 'https://api.ote.domrobot.com/';
+    protected const XMLRPC = 'xmlrpc';
+    protected const JSONRPC = 'jsonrpc';
 
-    private $debug = false;
-    private $language = 'en';
-    private $customer = '';
-    private $clTrid;
-    private $cookieFile;
+    protected $debug = false;
+    protected $language = 'en';
+    protected $customer = '';
+    protected $clTrid;
+    protected $cookieFile;
 
-    private $url = self::OTE_URL;
-    private $api = self::JSONRPC;
+    protected $url = self::OTE_URL;
+    protected $api = self::JSONRPC;
 
     /**
      * @var LoggerInterface
      */
-    private $logger;
+    protected $logger;
 
     /**
      * Domrobot constructor.
@@ -323,7 +323,7 @@ class Domrobot implements LoggerAwareInterface
      *
      * @return string
      */
-    private function getSecretCode(string $secret): string
+    protected function getSecretCode(string $secret): string
     {
         $timeSlice = floor(time() / 30);
         $codeLength = 6;
