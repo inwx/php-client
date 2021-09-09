@@ -69,6 +69,20 @@ class Domrobot implements LoggerAwareInterface
     }
 
     /**
+     * Configures the Domrobot to use a specified URL as endpoint.
+     *
+     * @param string $url
+     *
+     * @return self
+     */
+    public function useUrl(string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
      * @return bool Is the Domrobot configured to use the live endpoint?
      */
     public function isLive(): bool
