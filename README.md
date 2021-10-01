@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.inwx.com/en/" target="_blank">
-    <img src="https://images.inwx.com/logos/inwx.png">
+    <img src="https://www.inwx.com/images/logos/inwx.png">
   </a>
 </p>
 
