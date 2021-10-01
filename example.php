@@ -15,7 +15,7 @@ $result = $domrobot->setLanguage('en')
     //->useLive()
     // use the JSON-RPC API
     ->useJson()
-    // or use the XML-RPC API instead
+    // or use the XML-RPC API instead (xmlrpc extension needs to be installed, for PHP 8.0 and up this is a PECL extension)
     //->useXml()
     // debug will let you see everything you're sending and receiving
     ->setDebug(true)
