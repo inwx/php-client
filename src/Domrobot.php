@@ -113,7 +113,7 @@ class Domrobot implements LoggerAwareInterface
 
     /**
      * Configures the Domrobot to use the XML-RPC API. This needs the ext-xmlrpc PHP extension installed to work.
-     * This may not be installed by default in PHP.
+     * This is not installed by default in PHP.
      *
      * @return self
      */
@@ -173,7 +173,7 @@ class Domrobot implements LoggerAwareInterface
     }
 
     /**
-     * @return string
+     * @return string Path to the currently set cookie file
      */
     public function getCookieFile(): string
     {
@@ -181,7 +181,7 @@ class Domrobot implements LoggerAwareInterface
     }
 
     /**
-     * @param string $file
+     * @param string $file Path to the new cookie file
      *
      * @return self
      *
@@ -219,7 +219,7 @@ class Domrobot implements LoggerAwareInterface
     }
 
     /**
-     * @return string
+     * @return string The currently set custom client transaction identifier, if one is set
      */
     public function getClTrId(): string
     {
@@ -227,6 +227,8 @@ class Domrobot implements LoggerAwareInterface
     }
 
     /**
+     * Sets a custom client transaction identifier.
+     *
      * @param string $clTrId
      *
      * @return Domrobot
