@@ -125,6 +125,14 @@ class Domrobot implements LoggerAwareInterface
     }
 
     /**
+     * @return bool Is the Domrobot configured to use JSON-RPC?
+     */
+    public function isJson(): bool
+    {
+        return self::JSONRPC === $this->api;
+    }
+    
+    /**
      * @return bool Is the Domrobot configured to use XML-RPC?
      */
     public function isXml(): bool
@@ -231,40 +239,13 @@ class Domrobot implements LoggerAwareInterface
      *
      * @param string $clTrId
      *
-     * @return Domrobot
+     * @return self
      */
     public function setClTrId(string $clTrId): self
     {
         $this->clTrid = $clTrId;
 
         return $this;
-    }
-
-    /**
-     * Execute a login command with the API. This is needed before you can do anything else.
-     *
-     * @param string      $username
-     * @param string      $password
-     * @param string|null $sharedSecret
-     *
-     * @return array
-     */
-    public function login(string $username, string $password, ?string $sharedSecret = null): array
-    {
-        $params['lang'] = $this->language;
-        $params['user'] = $username;
-        $params['pass'] = $password;
-
-        $loginRes = $this->call('account', 'login', $params);
-        if (!empty($sharedSecret) && $loginRes['code'] == 1000 && !empty($loginRes['resData']['tfa'])) {
-            $tan = $this->getSecretCode($sharedSecret);
-            $unlockRes = $this->call('account', 'unlock', ['tan' => $tan]);
-            if ($unlockRes['code'] != 1000) {
-                return $unlockRes;
-            }
-        }
-
-        return $loginRes;
     }
 
     /**
@@ -325,14 +306,6 @@ class Domrobot implements LoggerAwareInterface
     }
 
     /**
-     * @return bool Is the Domrobot configured to use JSON-RPC?
-     */
-    public function isJson(): bool
-    {
-        return self::JSONRPC === $this->api;
-    }
-
-    /**
      * Returns a secret code needed for 2 factor auth.
      *
      * @param string $secret
@@ -367,6 +340,33 @@ class Domrobot implements LoggerAwareInterface
         return str_pad($value % $modulo, $codeLength, '0', STR_PAD_LEFT);
     }
 
+    /**
+     * Execute a login command with the API. This is needed before you can do anything else.
+     *
+     * @param string      $username
+     * @param string      $password
+     * @param string|null $sharedSecret
+     *
+     * @return array
+     */
+    public function login(string $username, string $password, ?string $sharedSecret = null): array
+    {
+        $params['lang'] = $this->language;
+        $params['user'] = $username;
+        $params['pass'] = $password;
+
+        $loginRes = $this->call('account', 'login', $params);
+        if (!empty($sharedSecret) && $loginRes['code'] == 1000 && !empty($loginRes['resData']['tfa'])) {
+            $tan = $this->getSecretCode($sharedSecret);
+            $unlockRes = $this->call('account', 'unlock', ['tan' => $tan]);
+            if ($unlockRes['code'] != 1000) {
+                return $unlockRes;
+            }
+        }
+
+        return $loginRes;
+    }
+    
     /**
      * Execute a logout command with the API.
      *
