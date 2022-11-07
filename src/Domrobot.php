@@ -10,7 +10,7 @@ use RuntimeException;
 
 class Domrobot implements LoggerAwareInterface
 {
-    protected const VERSION = '3.2.0';
+    protected const VERSION = '3.4.0';
     protected const LIVE_URL = 'https://api.domrobot.com/';
     protected const OTE_URL = 'https://api.ote.domrobot.com/';
     protected const XMLRPC = 'xmlrpc';
