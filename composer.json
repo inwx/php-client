@@ -17,7 +17,7 @@
     "require": {
         "php": ">=8.0",
         "ext-curl": "*",
-        "monolog/monolog": ">= 2.0.0"
+        "monolog/monolog": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -25,7 +25,6 @@
         }
     },
     "suggest": {
-        "ext-xmlrpc": "Needed to use the XML-RPC API",
-        "ext-json": "Needed to use the JSON-RPC API"
+        "ext-xmlrpc": "Needed to use the XML-RPC API"
     }
 }
