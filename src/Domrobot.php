@@ -256,6 +256,8 @@ class Domrobot implements LoggerAwareInterface
      * @param array  $params
      *
      * @return array
+     *
+     * @throws ExceptionCallFailed
      */
     public function call(string $object, string $method, array $params = []): array
     {
@@ -298,11 +300,23 @@ class Domrobot implements LoggerAwareInterface
             $this->logger->debug("Response:\n" . $response . "\n");
         }
 
-        if ($this->isJson()) {
-            return json_decode($response, true);
+        if($response === false) {
+            throw new ExceptionCallFailed('Curl failed to request from: ' . $this->url . $this->api . '/');
         }
 
-        return xmlrpc_decode($response, 'UTF-8');
+        if ($this->isJson()) {
+            $result = json_decode($response, true);
+            if(!is_array($result)) {
+                throw new ExceptionCallFailed('Failed to decode json response: ' . var_export($response, true));
+            }
+            return $result;
+        }
+
+        $result = xmlrpc_decode($response, 'UTF-8');
+        if(!is_array($result)) {
+            throw new ExceptionCallFailed('Failed to decode xmlrpc response: ' . var_export($response, true));
+        }
+        return $result;
     }
 
     /**
@@ -348,6 +362,8 @@ class Domrobot implements LoggerAwareInterface
      * @param string|null $sharedSecret
      *
      * @return array
+     *
+     * @throws ExceptionCallFailed
      */
     public function login(string $username, string $password, ?string $sharedSecret = null): array
     {
@@ -371,6 +387,8 @@ class Domrobot implements LoggerAwareInterface
      * Execute a logout command with the API.
      *
      * @return array
+     *
+     * @throws ExceptionCallFailed
      */
     public function logout(): array
     {
