@@ -280,8 +280,18 @@ class Domrobot implements LoggerAwareInterface
         $header[] = 'Content-Type: ' . ($this->isJson() ? 'application/json' : 'text/xml');
         $header[] = 'Connection: keep-alive';
         $header[] = 'Keep-Alive: 300';
-        $forwardedFor = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? '';
-        $header[] = 'X-FORWARDED-FOR: ' . $forwardedFor;
+        if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+            $ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
+        } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',') !== false) {
+                $ip = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0];
+            } else {
+                $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            }
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        $header[] = 'X-FORWARDED-FOR: ' . @$ip;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->url . $this->api . '/');
         curl_setopt($ch, CURLOPT_TIMEOUT, 65);
