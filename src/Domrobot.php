@@ -294,7 +294,6 @@ class Domrobot implements LoggerAwareInterface
         curl_setopt($ch, CURLOPT_USERAGENT, 'DomRobot/' . self::VERSION . ' (PHP ' . PHP_VERSION . ')');
 
         $response = curl_exec($ch);
-        curl_close($ch);
         if ($this->debug) {
             $this->logger->debug("Request:\n" . $request . "\n");
             $this->logger->debug("Response:\n" . $response . "\n");
