@@ -292,7 +292,11 @@ class Domrobot implements LoggerAwareInterface
 
         $response = curl_exec($ch);
         if ($this->debug) {
-            $this->logger->debug("Request:\n" . $request . "\n");
+            $debugParams = isset($params['pass']) ? array_merge($params, ['pass' => '[REDACTED]']) : $params;
+            $debugRequest = $this->isJson()
+                ? json_encode(['method' => $methodParam, 'params' => $debugParams])
+                : xmlrpc_encode_request($methodParam, $debugParams, ['encoding' => 'UTF-8', 'escaping' => 'markup', 'verbosity' => 'no_white_space']);
+            $this->logger->debug("Request:\n" . $debugRequest . "\n");
             $this->logger->debug("Response:\n" . $response . "\n");
         }
 
