@@ -4,6 +4,9 @@ namespace INWX;
 
 class Base32
 {
+    private const CHARS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '2', '3', '4', '5', '6', '7', '='];
+    private const CHARS_FLIPPED = ['A' => 0, 'B' => 1, 'C' => 2, 'D' => 3, 'E' => 4, 'F' => 5, 'G' => 6, 'H' => 7, 'I' => 8, 'J' => 9, 'K' => 10, 'L' => 11, 'M' => 12, 'N' => 13, 'O' => 14, 'P' => 15, 'Q' => 16, 'R' => 17, 'S' => 18, 'T' => 19, 'U' => 20, 'V' => 21, 'W' => 22, 'X' => 23, 'Y' => 24, 'Z' => 25, '2' => 26, '3' => 27, '4' => 28, '5' => 29, '6' => 30, '7' => 31, '=' => 32];
+
     /**
      * Utility to decode base32 for 2 factor auth.
      *
@@ -17,8 +20,8 @@ class Base32
             return '';
         }
 
-        $base32chars = $this->getLookupTable();
-        $base32charsFlipped = array_flip($base32chars);
+        $base32chars = self::CHARS;
+        $base32charsFlipped = self::CHARS_FLIPPED;
 
         $paddingCharCount = substr_count($secret, $base32chars[32]);
         $allowedValues = [6, 4, 3, 1, 0];
@@ -57,47 +60,4 @@ class Base32
         return $binaryString;
     }
 
-    /**
-     * Helper method to lookup base32 decoding.
-     *
-     * @return array
-     */
-    private function getLookupTable(): array
-    {
-        return [
-            'A',
-            'B',
-            'C',
-            'D',
-            'E',
-            'F',
-            'G',
-            'H', // 7
-            'I',
-            'J',
-            'K',
-            'L',
-            'M',
-            'N',
-            'O',
-            'P', // 15
-            'Q',
-            'R',
-            'S',
-            'T',
-            'U',
-            'V',
-            'W',
-            'X', // 23
-            'Y',
-            'Z',
-            '2',
-            '3',
-            '4',
-            '5',
-            '6',
-            '7', // 31
-            '=', // padding char
-        ];
-    }
 }
