@@ -21,6 +21,7 @@ class Domrobot implements LoggerAwareInterface
     protected string $customer = '';
     protected string $clTrid = '';
     protected string $cookieFile;
+    private bool $ownsCookieFile;
 
     protected string $url = self::OTE_URL;
     protected string $api = self::JSONRPC;
@@ -36,7 +37,15 @@ class Domrobot implements LoggerAwareInterface
     {
         $this->logger = new Logger('domrobot_default_logger');
         $this->logger->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
+        $this->ownsCookieFile = ($cookieFile === null);
         $this->cookieFile = $cookieFile ?? tempnam(sys_get_temp_dir(), 'INWX');
+    }
+
+    public function __destruct()
+    {
+        if ($this->ownsCookieFile && file_exists($this->cookieFile)) {
+            unlink($this->cookieFile);
+        }
     }
 
     /**
@@ -199,6 +208,7 @@ class Domrobot implements LoggerAwareInterface
                 2400);
         }
         $this->cookieFile = $file;
+        $this->ownsCookieFile = false;
 
         return $this;
     }
