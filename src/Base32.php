@@ -33,6 +33,10 @@ class Base32
         }
         $secret = str_replace('=', '', $secret);
         $secret = str_split($secret);
+        $remainder = count($secret) % 8;
+        if ($remainder !== 0) {
+            $secret = array_pad($secret, count($secret) + (8 - $remainder), 'A');
+        }
         $binaryString = '';
         $secretCount = count($secret);
         for ($i = 0; $i < $secretCount; $i += 8) {
