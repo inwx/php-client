@@ -16,19 +16,16 @@ class Domrobot implements LoggerAwareInterface
     protected const XMLRPC = 'xmlrpc';
     protected const JSONRPC = 'jsonrpc';
 
-    protected $debug = false;
-    protected $language = 'en';
-    protected $customer = '';
-    protected $clTrid;
-    protected $cookieFile;
+    protected bool $debug = false;
+    protected string $language = 'en';
+    protected string $customer = '';
+    protected string $clTrid = '';
+    protected string $cookieFile;
 
-    protected $url = self::OTE_URL;
-    protected $api = self::JSONRPC;
+    protected string $url = self::OTE_URL;
+    protected string $api = self::JSONRPC;
 
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
+    protected LoggerInterface $logger;
 
     /**
      * Domrobot constructor.
@@ -371,10 +368,10 @@ class Domrobot implements LoggerAwareInterface
         $params['pass'] = $password;
 
         $loginRes = $this->call('account', 'login', $params);
-        if (!empty($sharedSecret) && $loginRes['code'] == 1000 && !empty($loginRes['resData']['tfa'])) {
+        if (!empty($sharedSecret) && $loginRes['code'] === 1000 && !empty($loginRes['resData']['tfa'])) {
             $tan = $this->getSecretCode($sharedSecret);
             $unlockRes = $this->call('account', 'unlock', ['tan' => $tan]);
-            if ($unlockRes['code'] != 1000) {
+            if ($unlockRes['code'] !== 1000) {
                 return $unlockRes;
             }
         }

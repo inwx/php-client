@@ -9,9 +9,9 @@ class Base32
      *
      * @param string $secret
      *
-     * @return string
+     * @return string|false
      */
-    public function decode(string $secret): string
+    public function decode(string $secret): string|false
     {
         if (empty($secret)) {
             return '';
