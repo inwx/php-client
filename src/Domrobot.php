@@ -16,19 +16,17 @@ class Domrobot implements LoggerAwareInterface
     protected const XMLRPC = 'xmlrpc';
     protected const JSONRPC = 'jsonrpc';
 
-    protected $debug = false;
-    protected $language = 'en';
-    protected $customer = '';
-    protected $clTrid;
-    protected $cookieFile;
+    protected bool $debug = false;
+    protected string $language = 'en';
+    protected string $customer = '';
+    protected string $clTrid = '';
+    protected string $cookieFile;
+    private bool $ownsCookieFile;
 
-    protected $url = self::OTE_URL;
-    protected $api = self::JSONRPC;
+    protected string $url = self::OTE_URL;
+    protected string $api = self::JSONRPC;
 
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
+    protected LoggerInterface $logger;
 
     /**
      * Domrobot constructor.
@@ -39,7 +37,15 @@ class Domrobot implements LoggerAwareInterface
     {
         $this->logger = new Logger('domrobot_default_logger');
         $this->logger->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
+        $this->ownsCookieFile = ($cookieFile === null);
         $this->cookieFile = $cookieFile ?? tempnam(sys_get_temp_dir(), 'INWX');
+    }
+
+    public function __destruct()
+    {
+        if ($this->ownsCookieFile && file_exists($this->cookieFile)) {
+            unlink($this->cookieFile);
+        }
     }
 
     /**
@@ -202,6 +208,7 @@ class Domrobot implements LoggerAwareInterface
                 2400);
         }
         $this->cookieFile = $file;
+        $this->ownsCookieFile = false;
 
         return $this;
     }
@@ -295,7 +302,11 @@ class Domrobot implements LoggerAwareInterface
 
         $response = curl_exec($ch);
         if ($this->debug) {
-            $this->logger->debug("Request:\n" . $request . "\n");
+            $debugParams = isset($params['pass']) ? array_merge($params, ['pass' => '[REDACTED]']) : $params;
+            $debugRequest = $this->isJson()
+                ? json_encode(['method' => $methodParam, 'params' => $debugParams])
+                : xmlrpc_encode_request($methodParam, $debugParams, ['encoding' => 'UTF-8', 'escaping' => 'markup', 'verbosity' => 'no_white_space']);
+            $this->logger->debug("Request:\n" . $debugRequest . "\n");
             $this->logger->debug("Response:\n" . $response . "\n");
         }
 
@@ -371,10 +382,10 @@ class Domrobot implements LoggerAwareInterface
         $params['pass'] = $password;
 
         $loginRes = $this->call('account', 'login', $params);
-        if (!empty($sharedSecret) && $loginRes['code'] == 1000 && !empty($loginRes['resData']['tfa'])) {
+        if (!empty($sharedSecret) && $loginRes['code'] === 1000 && !empty($loginRes['resData']['tfa'])) {
             $tan = $this->getSecretCode($sharedSecret);
             $unlockRes = $this->call('account', 'unlock', ['tan' => $tan]);
-            if ($unlockRes['code'] != 1000) {
+            if ($unlockRes['code'] !== 1000) {
                 return $unlockRes;
             }
         }
